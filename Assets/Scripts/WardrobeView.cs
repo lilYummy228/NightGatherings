@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class WardrobeAnimator : MonoBehaviour
+public class WardrobeView : MonoBehaviour
 {
-    private const string DoorAnimationName = "IsOpened";
+    public readonly int IsOpened = Animator.StringToHash(nameof(IsOpened));
 
     [SerializeField] private Animator _animator;
     [SerializeField] private Wardrobe _wardrobe;
@@ -14,7 +14,7 @@ public class WardrobeAnimator : MonoBehaviour
         _wardrobe.IsDoorOpened -= Animate;
 
     private void Animate(bool isOpened) => 
-        _animator.SetBool(DoorAnimationName, isOpened);
+        _animator.SetBool(IsOpened, isOpened);
 
     public void OnDoorOpened() =>
         _wardrobe.OpenDoor();

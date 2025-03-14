@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private PhoneAnimator _phoneAnimator;
+    [SerializeField] private PlayerView _phoneAnimator;
     [SerializeField] private ScoreCounter _scoreCounter;
 
     public event Action<bool> IsClicking;

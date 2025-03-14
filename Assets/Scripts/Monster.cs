@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -7,11 +8,13 @@ public class Monster : MonoBehaviour
 
     private float _bideMinTime = 3;
     private float _bideMaxTime = 6;
-    private float _spookDelay = 0.28f;
+    private float _spookDelay = 0.35f;
     private bool _isAbleToSpook;
     private Coroutine _coroutine;
     private WaitUntil _waitUntil;
     private WaitForSeconds _waitForSpook;
+
+    public event Action Spooked;
 
     private void Awake()
     {
@@ -21,23 +24,22 @@ public class Monster : MonoBehaviour
         StartCoroutine(nameof(Bide));
     }
 
-    private void OnEnable() => 
+    private void OnEnable() =>
         _wardrobe.DoorOpened += Release;
 
-    private void OnDisable() => 
+    private void OnDisable() =>
         _wardrobe.DoorOpened -= Release;
 
-    public void SetSpookStatus(bool isAbleToSpook) => 
+    public void SetSpookStatus(bool isAbleToSpook) =>
         _isAbleToSpook = isAbleToSpook;
 
     private IEnumerator Bide()
     {
         while (enabled)
         {
-            yield return new WaitForSeconds(Random.Range(_bideMinTime, _bideMaxTime));
+            yield return new WaitForSeconds(UnityEngine.Random.Range(_bideMinTime, _bideMaxTime));
 
-            if (_isAbleToSpook)
-                _wardrobe.InteractWithDoor(true);            
+            _wardrobe.InteractWithDoor(_isAbleToSpook);
 
             yield return _waitUntil;
 
@@ -51,7 +53,8 @@ public class Monster : MonoBehaviour
     private IEnumerator Spook()
     {
         yield return _waitForSpook;
-        Debug.Log("boo"); //defeat game status
+
+        Spooked?.Invoke();
     }
 
     private void Release() =>
