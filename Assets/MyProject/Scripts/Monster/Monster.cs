@@ -13,7 +13,7 @@ public abstract class Monster : MonoBehaviour
     protected WaitUntil _waitUntil;
     protected WaitForSeconds _wait;
     protected Coroutine _stateChangerCoroutine = null;
-    protected Coroutine _previousCoroutine;
+    protected Coroutine _bideCoroutine;
 
     public event Action Jumpedscare;
 
@@ -22,7 +22,7 @@ public abstract class Monster : MonoBehaviour
         _waitUntil = new WaitUntil(() => _isAbleToChangeState == false);
         _wait = new WaitForSeconds(_monster.JumpscareDelay);
 
-        _previousCoroutine = StartCoroutine(Bide(_wardrobe.InteractWithDoor));
+        _bideCoroutine = StartCoroutine(Bide(_wardrobe.InteractWithDoor));
     }
 
     private void OnEnable() =>
@@ -48,8 +48,7 @@ public abstract class Monster : MonoBehaviour
 
     protected void Jumpscare()
     {
-        if (_previousCoroutine != null)
-            StopCoroutine(_previousCoroutine);
+        StopCoroutine(_bideCoroutine);
 
         Jumpedscare?.Invoke();
 
@@ -61,7 +60,7 @@ public abstract class Monster : MonoBehaviour
     public IEnumerator Bide(Action<bool> action)
     {
         while (enabled)
-        {
+        {             
             yield return new WaitForSeconds(UnityEngine.Random.Range(_monster.BideMinTime, _monster.BideMaxTime));
 
             action.Invoke(_isAbleToChangeState);

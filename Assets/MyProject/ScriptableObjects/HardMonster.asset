@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90e8dc3fd065c9147aeee07ae18751f1, type: 3}
   m_Name: HardMonster
   m_EditorClassIdentifier: 
-  _bideMinTime: 3
+  _bideMinTime: 2
   _bideMaxTime: 6
-  _jumpscareDelay: 0.325
+  _jumpscareDelay: 0.3

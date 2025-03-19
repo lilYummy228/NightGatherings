@@ -13,7 +13,9 @@ public class SoundPlayer : MonoBehaviour
             if (_source.isPlaying)
                 _source.Stop();
 
-            _source.PlayOneShot(audioClip);
+            _source.clip = audioClip;
+
+            _source.Play();
         }
     }
 }

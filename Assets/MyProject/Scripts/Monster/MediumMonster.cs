@@ -12,8 +12,12 @@ public class MediumMonster : Monster
 
     private void StayOpened()
     {
-        if (_previousCoroutine != null)
-            _previousCoroutine = StartCoroutine(base.Bide(Scratch));
+        StopCoroutine(_stateChangerCoroutine);
+        StopCoroutine(_bideCoroutine);
+
+        _bideCoroutine = StartCoroutine(Bide(Scratch));
+
+        Debug.Log("Door Opened");
     }
 
     private void Scratch(bool isScratching)
