@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class HardMonsterView : MonoBehaviour
 {
-    public readonly int Jumpscare = Animator.StringToHash(nameof(Show));
+    public readonly int Jumpscare = Animator.StringToHash(nameof(Jumpscare));
 
     [SerializeField] private Image _jumpscareImage;
     [SerializeField] protected Monster _monster;

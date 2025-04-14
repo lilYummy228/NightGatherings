@@ -16,8 +16,6 @@ public class MediumMonster : Monster
         StopCoroutine(_bideCoroutine);
 
         _bideCoroutine = StartCoroutine(Bide(Scratch));
-
-        Debug.Log("Door Opened");
     }
 
     private void Scratch(bool isScratching)
