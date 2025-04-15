@@ -25,14 +25,6 @@ public abstract class Monster : MonoBehaviour
         _bideCoroutine = StartCoroutine(Bide(_wardrobe.InteractWithDoor));
     }
 
-    private void OnEnable() =>
-        _wardrobe.DoorOpened += OnDoorOpened;
-
-    private void OnDisable() =>
-        _wardrobe.DoorOpened -= OnDoorOpened;
-
-    protected abstract void OnDoorOpened();
-
     public void SetAbleStatus(bool isAbleToChangeState) =>
         _isAbleToChangeState = isAbleToChangeState;
 

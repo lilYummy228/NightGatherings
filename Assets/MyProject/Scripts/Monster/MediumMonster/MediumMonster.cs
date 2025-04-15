@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class MediumMonster : Monster
+public class MediumMonster : HardMonster
 {
     [SerializeField] private AudioClip _scratchingSound;
 
