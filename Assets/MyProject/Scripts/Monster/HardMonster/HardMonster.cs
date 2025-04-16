@@ -7,5 +7,5 @@ public class HardMonster : Monster
         _wardrobe.DoorOpened -= OnDoorOpened;
 
     protected virtual void OnDoorOpened() => 
-        GetOut();
+        TryToJumpscare();
 }

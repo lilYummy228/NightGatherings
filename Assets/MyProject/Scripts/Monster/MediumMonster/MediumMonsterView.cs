@@ -33,5 +33,5 @@ public class MediumMonsterView : HardMonsterView
 
 
     public void OnGotOut() =>
-        _monster.GetOut();
+        _monster.TryToJumpscare();
 }

@@ -9,7 +9,7 @@ public abstract class Monster : MonoBehaviour
     [SerializeField] protected MonsterSetup _monster;
     [SerializeField] protected Wardrobe _wardrobe;
 
-    protected bool _isAbleToChangeState;
+    protected bool _isChangingState;
     protected WaitUntil _waitUntil;
     protected WaitForSeconds _wait;
     protected Coroutine _stateChangerCoroutine = null;
@@ -19,14 +19,14 @@ public abstract class Monster : MonoBehaviour
 
     private void Awake()
     {
-        _waitUntil = new WaitUntil(() => _isAbleToChangeState == false);
+        _waitUntil = new WaitUntil(() => _isChangingState == false);
         _wait = new WaitForSeconds(_monster.JumpscareDelay);
 
         _bideCoroutine = StartCoroutine(Bide(_wardrobe.InteractWithDoor));
     }
 
-    public void SetAbleStatus(bool isAbleToChangeState) =>
-        _isAbleToChangeState = isAbleToChangeState;
+    public void SetAbleStatus(bool isChangingState) =>
+        _isChangingState = isChangingState;
 
     protected virtual IEnumerator WaitForChangeState(Action action)
     {
@@ -35,7 +35,7 @@ public abstract class Monster : MonoBehaviour
         action.Invoke();
     }
 
-    public void GetOut() => 
+    public void TryToJumpscare() => 
         _stateChangerCoroutine = StartCoroutine(WaitForChangeState(Jumpscare));
 
     protected void Jumpscare()
@@ -43,8 +43,6 @@ public abstract class Monster : MonoBehaviour
         StopCoroutine(_bideCoroutine);
 
         Jumpedscare?.Invoke();
-
-        Debug.Log("Jumpscare");
 
         _soundPlayer.PlaySound(_screamSound);
     }
@@ -55,7 +53,7 @@ public abstract class Monster : MonoBehaviour
         {             
             yield return new WaitForSeconds(UnityEngine.Random.Range(_monster.BideMinTime, _monster.BideMaxTime));
 
-            action.Invoke(_isAbleToChangeState);
+            action.Invoke(_isChangingState);
 
             yield return _waitUntil;
 
