@@ -304,4 +304,4 @@ MonoBehaviour:
   _phoneAnimator: {fileID: 2783626978519008484}
   _scoreCounter: {fileID: 0}
   _soundPlayer: {fileID: 3936113501402927768}
-  _clickSound: {fileID: 8300000, guid: 3a5bfbec9a587644bbe4e65b2b5e7233, type: 3}
+  _clickSound: {fileID: 8300000, guid: 32e18615e11bbfc4bb0f0c5c5862280d, type: 3}
