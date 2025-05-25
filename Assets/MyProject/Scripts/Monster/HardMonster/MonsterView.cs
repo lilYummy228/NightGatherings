@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HardMonsterView : MonoBehaviour
+public class MonsterView : MonoBehaviour
 {
     public readonly int Jumpscare = Animator.StringToHash(nameof(Jumpscare));
 

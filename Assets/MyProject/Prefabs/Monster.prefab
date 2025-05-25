@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.41509432, g: 0.41509432, b: 0.41509432, a: 1}
+  m_Color: {r: 0.41509432, g: 0.41509432, b: 0.41509432, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -162,10 +162,10 @@ GameObject:
   - component: {fileID: 248684421292678020}
   - component: {fileID: 2465566682674799315}
   - component: {fileID: 2177123720707841441}
-  - component: {fileID: 8697883201729894541}
   - component: {fileID: 726391594058586230}
+  - component: {fileID: 3044519214056889626}
   m_Layer: 5
-  m_Name: HardMonster
+  m_Name: Monster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -234,22 +234,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &8697883201729894541
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6459166816085496011}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 551a1b68d7769cc4fb52d3c62a4c1e85, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _soundPlayer: {fileID: 2465566682674799315}
-  _screamSound: {fileID: 8300000, guid: 0e633325638c9a143832aa495b992f89, type: 3}
-  _monster: {fileID: 11400000, guid: 6226f8fabb8e6794ca4ac3546e687064, type: 2}
-  _wardrobe: {fileID: 0}
 --- !u!114 &726391594058586230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,5 +247,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _jumpscareImage: {fileID: 1652107865455944546}
-  _monster: {fileID: 8697883201729894541}
+  _monster: {fileID: 3044519214056889626}
   _animator: {fileID: 2177123720707841441}
+--- !u!114 &3044519214056889626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6459166816085496011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a3315c8fd69bfd4f8070cf523488963, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _soundPlayer: {fileID: 2465566682674799315}
+  _screamSound: {fileID: 8300000, guid: 0e633325638c9a143832aa495b992f89, type: 3}
+  _monster: {fileID: 11400000, guid: 6226f8fabb8e6794ca4ac3546e687064, type: 2}
+  _wardrobe: {fileID: 0}
