@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35d5a99812913774db94a30c6f736d1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _doorOpenSound: {fileID: 8300000, guid: a047ec00d3476d043a65633034e871cb, type: 3}
+  _doorOpenSound: {fileID: 8300000, guid: 483c52cffeccb6c4ca175f1afe49b21d, type: 3}
   _doorCloseSound: {fileID: 8300000, guid: 70b5f7f6f8f83fd42b09f8b7d10fd795, type: 3}
   _soundPlayer: {fileID: 482166679234700548}
 --- !u!1 &4574107342097229478

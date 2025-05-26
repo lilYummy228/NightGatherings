@@ -8,19 +8,21 @@ public class Wardrobe : MonoBehaviour
     [SerializeField] private SoundPlayer _soundPlayer;
 
     public event Action<bool> IsDoorOpened;
-    public event Action DoorOpened;
+    public event Action OnOpened;
 
-    public void InteractWithDoor(bool isOpening)
+    public void InteractWithDoor(bool isOpened)
     {
-        IsDoorOpened.Invoke(isOpening);
+        IsDoorOpened.Invoke(isOpened);
 
-        if (isOpening)
+        if (_soundPlayer.Source.isPlaying)
+            _soundPlayer.Source.Stop();
+
+        if (isOpened)
             _soundPlayer.PlaySound(_doorOpenSound);
-
-        if (_soundPlayer.Source.isPlaying && isOpening == false)
+        else
             _soundPlayer.PlaySound(_doorCloseSound);
     }
 
-    public void OpenDoor() => 
-        DoorOpened?.Invoke();
+    public void OpenDoor() =>
+        OnOpened?.Invoke();
 }

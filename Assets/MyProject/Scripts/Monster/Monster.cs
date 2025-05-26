@@ -4,64 +4,65 @@ using UnityEngine;
 
 public class Monster : MonoBehaviour
 {
-    [SerializeField] protected SoundPlayer _soundPlayer;
+    [SerializeField] private SoundPlayer _soundPlayer;
     [SerializeField] private AudioClip _screamSound;
-    [SerializeField] protected MonsterSetup _monster;
-    [SerializeField] protected Wardrobe _wardrobe;
+    [SerializeField] private MonsterSetup _monster;
+    [SerializeField] private Wardrobe _wardrobe;
 
-    protected bool _isChangingState;
-    protected WaitUntil _waitUntil;
-    protected WaitForSeconds _wait;
-    protected Coroutine _stateChangerCoroutine = null;
-    protected Coroutine _bideCoroutine;
+    private WaitForSeconds _wait;
+    private WaitForSeconds _sleep;
+    private Coroutine _stateChangerCoroutine = null;
+    private Coroutine _bideCoroutine;
+    private bool _isChangingState;
+    private float _minSleepTime = 2f;
+    private float _maxSleepTime = 4f;
 
     public event Action Jumpedscare;
 
     private void Awake()
     {
-        _waitUntil = new WaitUntil(() => _isChangingState == false);
         _wait = new WaitForSeconds(_monster.JumpscareDelay);
+        _sleep = new WaitForSeconds(UnityEngine.Random.Range(_minSleepTime, _maxSleepTime));
 
-        _bideCoroutine = StartCoroutine(Bide(_wardrobe.InteractWithDoor));
+        _bideCoroutine = StartCoroutine(Bide());
     }
 
     private void OnEnable() =>
-        _wardrobe.DoorOpened += OnDoorOpened;
+        _wardrobe.OnOpened += TryToJumpscare;
 
     private void OnDisable() =>
-        _wardrobe.DoorOpened -= OnDoorOpened;
-
-    private void OnDoorOpened() =>
-        TryToJumpscare();
+        _wardrobe.OnOpened -= TryToJumpscare;
 
     public void SetAbleStatus(bool isChangingState) =>
         _isChangingState = isChangingState;
 
-    public void TryToJumpscare() => 
-        _stateChangerCoroutine = StartCoroutine(WaitForChangeState(Jumpscare));
+    public void TryToJumpscare() =>
+        StartCoroutine(WaitForChangeState());
 
-    private IEnumerator Bide(Action<bool> action)
+    private IEnumerator Bide()
     {
-        while (enabled)
-        {
-            yield return new WaitForSeconds(UnityEngine.Random.Range(_monster.BideMinTime, _monster.BideMaxTime));
+        yield return new WaitForSeconds(UnityEngine.Random.Range(_monster.BideMinTime, _monster.BideMaxTime));
 
-            action.Invoke(_isChangingState);
-
-            yield return _waitUntil;
-
-            if (_stateChangerCoroutine != null)
-                StopCoroutine(_stateChangerCoroutine);
-
-            action.Invoke(false);
-        }
+        _wardrobe.InteractWithDoor(true);
     }
 
-    private IEnumerator WaitForChangeState(Action action)
+    private IEnumerator Hide()
+    {
+        yield return _sleep;
+
+        _wardrobe.InteractWithDoor(false);
+
+        StartCoroutine(Bide());
+    }
+
+    private IEnumerator WaitForChangeState()
     {
         yield return _wait;
 
-        action.Invoke();
+        if (_isChangingState)
+            Jumpscare();
+        else
+            StartCoroutine(Hide());
     }
 
     private void Jumpscare()
@@ -71,5 +72,5 @@ public class Monster : MonoBehaviour
         Jumpedscare?.Invoke();
 
         _soundPlayer.PlaySound(_screamSound);
-    }    
+    }
 }

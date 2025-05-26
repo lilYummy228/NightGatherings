@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90e8dc3fd065c9147aeee07ae18751f1, type: 3}
   m_Name: EasyMonster
   m_EditorClassIdentifier: 
-  _bideMinTime: 4
-  _bideMaxTime: 9
-  _jumpscareDelay: 0.35
+  _bideMinTime: 5
+  _bideMaxTime: 12
+  _jumpscareDelay: 0.4

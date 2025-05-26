@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     [SerializeField] private ScoreCounter _scoreCounter;
     [SerializeField] private SoundPlayer _soundPlayer;
     [SerializeField] private AudioClip _clickSound;
+    [SerializeField] private ScreenshotChanger _shotChanger;
 
     public event Action<bool> IsClicking;
 
@@ -34,6 +35,8 @@ public class Player : MonoBehaviour
             IsClicking?.Invoke(true);
 
             _soundPlayer.PlaySound(_clickSound);
+
+            _shotChanger.Swap();
 
             _time = Time.time + _delay;
 
