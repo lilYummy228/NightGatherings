@@ -10,7 +10,8 @@ public class Monster : MonoBehaviour
     [SerializeField] private Wardrobe _wardrobe;
 
     private WaitUntil _waitUntil;
-    private WaitForSeconds _sleep;
+    private WaitForSeconds _bide;
+    private WaitForSeconds _monsterDelay;
     private Coroutine _jumpscareCoroutine;
     private Coroutine _hideCoroutine;
     private Coroutine _bideCoroutine;
@@ -23,7 +24,8 @@ public class Monster : MonoBehaviour
     private void OnEnable()
     {
         _waitUntil = new WaitUntil(() => _isChangingState);
-        _sleep = new WaitForSeconds(UnityEngine.Random.Range(_minSleepTime, _maxSleepTime));
+        _bide = new WaitForSeconds(UnityEngine.Random.Range(_minSleepTime, _maxSleepTime));
+        _monsterDelay = new WaitForSeconds(_monster.JumpscareDelay);
 
         _bideCoroutine = StartCoroutine(Bide());
 
@@ -51,7 +53,7 @@ public class Monster : MonoBehaviour
 
     private IEnumerator Hide()
     {
-        yield return _sleep;
+        yield return _bide;
 
         if (_jumpscareCoroutine != null)
             StopCoroutine(_jumpscareCoroutine);
@@ -63,10 +65,10 @@ public class Monster : MonoBehaviour
 
     private IEnumerator JumscareCoroutine()
     {
+        yield return _monsterDelay;
         yield return _waitUntil;
 
         Jumpscare();
-        StartCoroutine(Hide());
     }
 
     private void Jumpscare()

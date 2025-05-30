@@ -691,7 +691,7 @@ MonoBehaviour:
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: -60
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -1332,6 +1332,7 @@ GameObject:
   m_Component:
   - component: {fileID: 752418095}
   - component: {fileID: 752418094}
+  - component: {fileID: 752418096}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -1354,10 +1355,7 @@ MonoBehaviour:
   _monster: {fileID: 602440317}
   _player: {fileID: 646876081}
   _wardrobe: {fileID: 1229679277}
-  _ambientSoundPlayer: {fileID: 1129387490}
-  _gameFinishedPanel: {fileID: 1619202641}
   _scoreCounter: {fileID: 1440637047}
-  _tutorial: {fileID: 710957791}
 --- !u!4 &752418095
 Transform:
   m_ObjectHideFlags: 0
@@ -1373,6 +1371,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &752418096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 752418093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e1a8e2bfcfeb01438bc64e8ce57c28b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _game: {fileID: 752418094}
+  _tutorial: {fileID: 710957791}
+  _ambientSoundPlayer: {fileID: 1129387490}
+  _gameFinishedPanel: {fileID: 1619202641}
+  _timer: {fileID: 1752391962}
 --- !u!1 &935931478
 GameObject:
   m_ObjectHideFlags: 0
@@ -1409,7 +1424,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -351.27, y: -365}
+  m_AnchoredPosition: {x: -507, y: -365}
   m_SizeDelta: {x: 702.54, y: 157}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &935931480
@@ -1623,7 +1638,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Return
+  m_text: Back to the menu
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 64bc1e08ea746fb4381b64eda10bdb91, type: 2}
   m_sharedMaterial: {fileID: 7893964197190564452, guid: 64bc1e08ea746fb4381b64eda10bdb91, type: 2}
@@ -1650,7 +1665,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 110.25
+  m_fontSize: 100
   m_fontSizeBase: 100
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1662,7 +1677,7 @@ MonoBehaviour:
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: -60
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -1833,9 +1848,9 @@ MonoBehaviour:
       de: 
       hi: 
   text: 
-  ru: "\u041D\u0430\u0437\u0430\u0434"
-  en: Return
-  tr: "Geri d\xF6nmek"
+  ru: "\u041D\u0430\u0437\u0430\u0434 \u0432 \u043C\u0435\u043D\u044E"
+  en: Back to the menu
+  tr: "Men\xFCye geri d\xF6n"
   az: 
   be: 
   he: 
@@ -4341,7 +4356,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 351.27, y: -365}
+  m_AnchoredPosition: {x: 457, y: -365}
   m_SizeDelta: {x: 702.54, y: 157}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1859225084
