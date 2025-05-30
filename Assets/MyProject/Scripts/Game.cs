@@ -1,25 +1,45 @@
+using System;
+using System.Collections;
 using UnityEngine;
+using YG;
 
 public class Game : MonoBehaviour
 {
+    private const string NameLB = "Leaderboard";
+
     [SerializeField] private Monster _monster;
     [SerializeField] private Player _player;
     [SerializeField] private Wardrobe _wardrobe;
     [SerializeField] private AmbientSoundPlayer _ambientSoundPlayer;
     [SerializeField] private Transform _gameFinishedPanel;
+    [SerializeField] private ScoreCounter _scoreCounter;
+    [SerializeField] private Transform _tutorialPanel;
 
     private float _showStatsDelay = 2f;
+    private float _fadeTime = 3f;
 
     private void OnEnable()
     {
         _player.IsClicking += SetMonsterStatus;
         _monster.Jumpedscare += FinishGame;
-    }
+
+        if (YG2.saves.isFirstPlay == true)
+            StartCoroutine(ShowTutorial());
+    }    
 
     private void OnDisable()
     {
         _player.IsClicking -= SetMonsterStatus;
         _monster.Jumpedscare -= FinishGame;
+    }
+
+    private IEnumerator ShowTutorial()
+    {
+        _tutorialPanel.gameObject.SetActive(true);
+
+        yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+
+        
     }
 
     private void FinishGame()
@@ -29,6 +49,19 @@ public class Game : MonoBehaviour
         _wardrobe.gameObject.SetActive(false);
 
         Invoke(nameof(ShowGameStatistics), _showStatsDelay);
+
+        Save();
+    }
+
+    private void Save()
+    {
+        if (YG2.saves.points < _scoreCounter.Score)
+        {
+            YG2.saves.points = _scoreCounter.Score;
+            YG2.SetLeaderboard(NameLB, _scoreCounter.Score);
+        }
+
+        YG2.SaveProgress();
     }
 
     private void ShowGameStatistics() => 
