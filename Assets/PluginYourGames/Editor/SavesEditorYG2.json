@@ -1,5 +1,6 @@
 {
-    "points": 84,
+    "points": 118,
+    "isFirstPlay": true,
     "stringKeys": [],
     "stringValues": [],
     "floatKeys": [],
@@ -14,5 +15,5 @@
         false,
         false
     ],
-    "idSave": 4
+    "idSave": 5
 }

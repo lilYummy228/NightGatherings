@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -13,19 +14,20 @@ public class Game : MonoBehaviour
     [SerializeField] private AmbientSoundPlayer _ambientSoundPlayer;
     [SerializeField] private Transform _gameFinishedPanel;
     [SerializeField] private ScoreCounter _scoreCounter;
-    [SerializeField] private Transform _tutorialPanel;
+    [SerializeField] private CanvasGroup _tutorial;
 
     private float _showStatsDelay = 2f;
-    private float _fadeTime = 3f;
+    private float _fadeTime = 1.5f;
 
     private void OnEnable()
     {
         _player.IsClicking += SetMonsterStatus;
-        _monster.Jumpedscare += FinishGame;
 
         if (YG2.saves.isFirstPlay == true)
             StartCoroutine(ShowTutorial());
-    }    
+        else
+            StartGame();
+    }
 
     private void OnDisable()
     {
@@ -35,11 +37,24 @@ public class Game : MonoBehaviour
 
     private IEnumerator ShowTutorial()
     {
-        _tutorialPanel.gameObject.SetActive(true);
+        _tutorial.gameObject.SetActive(true);
 
         yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
 
-        
+        _tutorial.DOFade(default, _fadeTime);
+
+#if UNITY_EDITOR == false
+        YG2.saves.isFirstPlay = false;
+        YG2.SaveProgress();
+#endif
+
+        StartGame();
+    }
+
+    private void StartGame()
+    {
+        _monster.gameObject.SetActive(true);
+        _monster.Jumpedscare += FinishGame;
     }
 
     private void FinishGame()
@@ -50,10 +65,10 @@ public class Game : MonoBehaviour
 
         Invoke(nameof(ShowGameStatistics), _showStatsDelay);
 
-        Save();
+        SaveProgress();
     }
 
-    private void Save()
+    private void SaveProgress()
     {
         if (YG2.saves.points < _scoreCounter.Score)
         {
@@ -64,7 +79,7 @@ public class Game : MonoBehaviour
         YG2.SaveProgress();
     }
 
-    private void ShowGameStatistics() => 
+    private void ShowGameStatistics() =>
         _gameFinishedPanel.gameObject.SetActive(true);
 
     private void SetMonsterStatus(bool isAbleToSpook) =>

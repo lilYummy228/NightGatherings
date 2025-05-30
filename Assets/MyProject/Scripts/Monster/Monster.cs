@@ -9,9 +9,10 @@ public class Monster : MonoBehaviour
     [SerializeField] private MonsterSetup _monster;
     [SerializeField] private Wardrobe _wardrobe;
 
-    private WaitForSeconds _wait;
+    private WaitUntil _waitUntil;
     private WaitForSeconds _sleep;
-    private Coroutine _stateChangerCoroutine = null;
+    private Coroutine _jumpscareCoroutine;
+    private Coroutine _hideCoroutine;
     private Coroutine _bideCoroutine;
     private bool _isChangingState;
     private float _minSleepTime = 2f;
@@ -19,16 +20,15 @@ public class Monster : MonoBehaviour
 
     public event Action Jumpedscare;
 
-    private void Awake()
+    private void OnEnable()
     {
-        _wait = new WaitForSeconds(_monster.JumpscareDelay);
+        _waitUntil = new WaitUntil(() => _isChangingState);
         _sleep = new WaitForSeconds(UnityEngine.Random.Range(_minSleepTime, _maxSleepTime));
 
         _bideCoroutine = StartCoroutine(Bide());
-    }
 
-    private void OnEnable() =>
         _wardrobe.OnOpened += TryToJumpscare;
+    }
 
     private void OnDisable() =>
         _wardrobe.OnOpened -= TryToJumpscare;
@@ -36,8 +36,11 @@ public class Monster : MonoBehaviour
     public void SetAbleStatus(bool isChangingState) =>
         _isChangingState = isChangingState;
 
-    public void TryToJumpscare() =>
-        StartCoroutine(WaitForChangeState());
+    public void TryToJumpscare()
+    {
+        _jumpscareCoroutine = StartCoroutine(JumscareCoroutine());
+        _hideCoroutine = StartCoroutine(Hide());
+    }
 
     private IEnumerator Bide()
     {
@@ -50,23 +53,25 @@ public class Monster : MonoBehaviour
     {
         yield return _sleep;
 
+        if (_jumpscareCoroutine != null)
+            StopCoroutine(_jumpscareCoroutine);
+
         _wardrobe.InteractWithDoor(false);
 
-        StartCoroutine(Bide());
+        _bideCoroutine = StartCoroutine(Bide());
     }
 
-    private IEnumerator WaitForChangeState()
+    private IEnumerator JumscareCoroutine()
     {
-        yield return _wait;
+        yield return _waitUntil;
 
-        if (_isChangingState)
-            Jumpscare();
-        else
-            StartCoroutine(Hide());
+        Jumpscare();
+        StartCoroutine(Hide());
     }
 
     private void Jumpscare()
     {
+        StopCoroutine(_hideCoroutine);
         StopCoroutine(_bideCoroutine);
 
         Jumpedscare?.Invoke();
