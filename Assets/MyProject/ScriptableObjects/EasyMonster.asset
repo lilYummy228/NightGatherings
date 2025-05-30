@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bideMinTime: 5
   _bideMaxTime: 12
-  _jumpscareDelay: 0.4
+  _jumpscareDelay: 0.3

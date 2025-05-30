@@ -17,7 +17,7 @@ public class Monster : MonoBehaviour
     private Coroutine _bideCoroutine;
     private bool _isChangingState;
     private float _minSleepTime = 2f;
-    private float _maxSleepTime = 4f;
+    private float _maxSleepTime = 6f;
 
     public event Action Jumpedscare;
 
