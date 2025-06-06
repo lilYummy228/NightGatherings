@@ -4,29 +4,23 @@ using YG;
 
 public class Game : MonoBehaviour
 {
-    private const string NameLB = "Leaderboard";
-
     [SerializeField] private Monster _monster;
     [SerializeField] private Player _player;
     [SerializeField] private Wardrobe _wardrobe;
-    [SerializeField] private ScoreCounter _scoreCounter;
     [SerializeField] private Timer _timer;
+    [SerializeField] private ScoreSaveSystem _saveSystem;
 
     public event Action GameStarted;
     public event Action GameFinished;
     public event Action TutorialStarted;
 
-    public ScoreCounter ScoreCounter => _scoreCounter;
-    public bool IsNewRecord {  get; private set; } = false;
+    public ScoreSaveSystem ScoreSaveSystem => _saveSystem;
 
-    private void OnEnable()
+    private void Start()
     {
         _player.IsClicking += SetMonsterStatus;
 
-        if (YG2.saves.isFirstPlay == true)
-            TutorialStarted?.Invoke();
-        else
-            StartGame();
+        TutorialStarted?.Invoke();
     }
 
     private void OnDisable()
@@ -52,20 +46,10 @@ public class Game : MonoBehaviour
 
         GameFinished?.Invoke();
 
-        SaveProgress();
-    }
-
-    private void SaveProgress()
-    {
-        if (YG2.saves.points < _scoreCounter.Score)
-        {
-            YG2.saves.points = _scoreCounter.Score;
-            YG2.SetLeaderboard(NameLB, _scoreCounter.Score);
-
-            IsNewRecord = true;
-        }
-
-        YG2.SaveProgress();
+        if (YG2.player.auth)
+            _saveSystem.SaveCloudProgress();
+        else
+            _saveSystem.SaveLocalProgress();
     }
 
     private void SetMonsterStatus(bool isAbleToSpook) =>

@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using DG.Tweening;
-using YG;
 using TMPro;
 
 public class GameView : MonoBehaviour
@@ -11,6 +10,7 @@ public class GameView : MonoBehaviour
     [SerializeField] private AmbientSoundPlayer _ambientSoundPlayer;
     [SerializeField] private Transform _gameFinishedPanel;
     [SerializeField] private Transform _newRecordPanel;
+    [SerializeField] private Transform _continuePanel;
     [SerializeField] private Timer _timer;
     [SerializeField] private TextMeshProUGUI _time;
     [SerializeField] private TextMeshProUGUI _score;
@@ -27,15 +27,15 @@ public class GameView : MonoBehaviour
     {
         _waitUntil = new WaitUntil(() => Input.GetMouseButtonDown(0));
 
-        _game.GameFinished += FinishGame;
+        _game.GameFinished += ShowContinueScreen;
         _game.TutorialStarted += StartTutorial;
-    }    
+    }
 
     private void OnDisable()
     {
-        _game.GameFinished -= FinishGame;
+        _game.GameFinished -= ShowContinueScreen;
         _game.TutorialStarted -= StartTutorial;
-    }  
+    }
 
     private void StartTutorial() =>
         StartCoroutine(ShowTutorial());
@@ -48,13 +48,10 @@ public class GameView : MonoBehaviour
 
         _tutorial.DOFade(default, _fadeTime);
 
-        YG2.saves.isFirstPlay = false;
-        YG2.SaveProgress();
-
         _game.StartGame();
     }
 
-    private void FinishGame()
+    private void ShowContinueScreen()
     {
         _ambientSoundPlayer.gameObject.SetActive(false);
 
@@ -65,9 +62,9 @@ public class GameView : MonoBehaviour
     {
         _gameFinishedPanel.gameObject.SetActive(true);
         _time.text = $"{_timer.Minutes}:{_timer.Seconds}";
-        _score.text = _game.ScoreCounter.Score.ToString();
+        _score.text = _game.ScoreSaveSystem.ScoreCounter.Score.ToString();
 
-        if (_game.IsNewRecord)
+        if (_game.ScoreSaveSystem.IsNewRecord)
             ShowNewRecord();
     }
 
