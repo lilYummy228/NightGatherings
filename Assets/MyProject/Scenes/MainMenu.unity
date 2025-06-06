@@ -461,7 +461,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 4687ac23a1460d842b769c5262d41e1f, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 2
+  m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -687,8 +687,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -399, y: 279}
-  m_SizeDelta: {x: 1035.06, y: 366.69}
+  m_AnchoredPosition: {x: -286, y: 266}
+  m_SizeDelta: {x: 1271.83, y: 492.63}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1256596254
 CanvasRenderer:

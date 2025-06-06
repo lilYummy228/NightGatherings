@@ -10,7 +10,6 @@ public class GameView : MonoBehaviour
     [SerializeField] private AmbientSoundPlayer _ambientSoundPlayer;
     [SerializeField] private Transform _gameFinishedPanel;
     [SerializeField] private Transform _newRecordPanel;
-    [SerializeField] private Transform _continuePanel;
     [SerializeField] private Timer _timer;
     [SerializeField] private TextMeshProUGUI _time;
     [SerializeField] private TextMeshProUGUI _score;
